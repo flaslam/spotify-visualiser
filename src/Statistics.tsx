@@ -7,29 +7,9 @@ interface StatisticsProps {
 }
 
 const Statistics: React.FC<StatisticsProps> = (props) => {
-  // URLS
-  // Get top tracks:
-  // https://api.spotify.com/v1/me/top/tracks
-  // Get top artists:
-  // https://api.spotify.com/v1/me/top/artists
-  // Get top genres:
-  // https://api.spotify.com/v1/me/top/genres
-
   const [tracks, setTracks] = useState<any[]>([]);
   const [artists, setArtists] = useState<any[]>([]);
   useEffect(() => {
-    // const fetchData = async () => {
-    //   const url = "https://api.spotify.com/v1/me/top/tracks";
-    //   const headers = {
-    //     Authorization: `Bearer ${props.token}`,
-    //   };
-    //   const response = await axios.get(url, { headers });
-
-    //   setStats(response.data.items);
-    // };
-
-    // fetchData();
-
     const retrieveStats = async (url: string) => {
       const response = await fetchData(url, props.token);
       const data = response.data.items;
@@ -38,25 +18,19 @@ const Statistics: React.FC<StatisticsProps> = (props) => {
     };
 
     const retrieveAllStats = async () => {
+      // TODO: get user genres
       const tracksUrl = "https://api.spotify.com/v1/me/top/tracks";
       const artistsUrl = "https://api.spotify.com/v1/me/top/artists";
-      // const genresUrl = "https://api.spotify.com/v1/me/top/genres";
 
       const tracks = await retrieveStats(tracksUrl);
       const artists = await retrieveStats(artistsUrl);
-      // const genres = await retrieveStats(genresUrl);
 
       setTracks(tracks);
       setArtists(artists);
-
-      // const data =
-      // console.log()
     };
 
     retrieveAllStats();
   }, [props.token]);
-
-  // TODO: create object with { artists: {retrieveStats(artistUrl)}, tracks: {retriveStats(tracksUrl)}}
 
   return (
     <div className="statistics">

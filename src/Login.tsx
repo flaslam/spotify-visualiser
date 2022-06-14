@@ -4,16 +4,15 @@ import "./Login.css";
 
 const Login: React.FC = () => {
   // Preparing the URL for authentication
-  var client_id = "48a8525bea9f4603beb857f4cc7d1adb";
-  var redirect_uri = "http://localhost:3000/";
-
-  var scope = "user-top-read";
-
-  var url = "https://accounts.spotify.com/authorize";
+  const client_id = "48a8525bea9f4603beb857f4cc7d1adb";
+  const redirect_uri: string = process.env.REACT_APP_REDIRECT_URI as string;
+  const scope = "user-top-read";
+  let url = "https://accounts.spotify.com/authorize";
   url += "?response_type=token";
   url += "&client_id=" + encodeURIComponent(client_id);
   url += "&scope=" + encodeURIComponent(scope);
   url += "&redirect_uri=" + encodeURIComponent(redirect_uri);
+
   return (
     <div className="loginContainer">
       <div>
