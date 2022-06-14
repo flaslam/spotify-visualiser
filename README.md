@@ -1,3 +1,7 @@
+# Spotify Visualiser
+
+Lightweight client-side app utilising Spotify API and their Implicit Grant Flow for authorisation. Allows user to login and display a visualisation of their Spotify listening history.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
