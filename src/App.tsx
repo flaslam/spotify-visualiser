@@ -4,43 +4,22 @@ import Statistics from "./Statistics";
 import Login from "./Login";
 
 const App: React.FC = () => {
-  // Preparing the URL for authentication
-  var client_id = "48a8525bea9f4603beb857f4cc7d1adb";
-  var redirect_uri = "http://localhost:3000/";
-
-  // var state = generateRandomString(16);
-
-  // localStorage.setItem(stateKey, state);
-  var scope = "user-top-read";
-
-  var url = "https://accounts.spotify.com/authorize";
-  url += "?response_type=token";
-  url += "&client_id=" + encodeURIComponent(client_id);
-  url += "&scope=" + encodeURIComponent(scope);
-  url += "&redirect_uri=" + encodeURIComponent(redirect_uri);
-  // url += '&state=' + encodeURIComponent(state);
-
-  // Preparing
-
-  const [token, setToken] = useState<String>("");
-
-  const clearCookies = () => {
-    console.log(localStorage.getItem("userInfo"));
-  };
+  // Authorization token
+  const [token, setToken] = useState<string>("");
 
   useEffect(() => {
-    const getHash = () => {
-      // Get the hash from the URL
-      // Format: #access_token=XYZ&token_type=Bearer&expires_in=3600
+    const getTokenFromHash = () => {
+      // Get the hash from the URL, format: #access_token=XYZ&token_type=Bearer&expires_in=3600
 
       // Get browser hash URL
       const hash = window.location.hash;
 
       if (!hash) {
-        console.log("No hash.");
+        // console.log("No hash.");
         return;
       }
 
+      // TODO: Better way of decoding string
       // console.log(decodeURIComponent(hash.substring(1).split("&")[0]));
 
       const access_token = hash.substring(
@@ -49,32 +28,22 @@ const App: React.FC = () => {
       );
 
       if (!access_token) {
-        console.log("No token.");
+        // console.log("No token.");
         return;
       }
 
       setToken(access_token);
+
+      // Clear browser hash
+      window.location.hash = "";
     };
 
-    getHash();
-
-    // searchParams.get("access_token");
+    getTokenFromHash();
   });
 
   return (
     <div className="App">
-      <>
-        {!token ? (
-          <div>
-            <a href={url}>login</a>
-          </div>
-        ) : (
-          <>
-            <Statistics token={token} />
-            <button onClick={clearCookies} />
-          </>
-        )}
-      </>
+      {!token ? <Login /> : <Statistics token={token} />}
     </div>
   );
 };
