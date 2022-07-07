@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import fetchData from "./apiCalls";
 import "./Statistics.css";
+import Visualiser from "./Visualiser";
+import Visualiser2D from "./Visualiser2D";
 
 interface StatisticsProps {
   token: string;
 }
 
 const Statistics: React.FC<StatisticsProps> = (props) => {
+  const [view, setView] = useState<Boolean>(true);
   const [tracks, setTracks] = useState<any[]>([]);
   const [artists, setArtists] = useState<any[]>([]);
   useEffect(() => {
@@ -33,42 +36,13 @@ const Statistics: React.FC<StatisticsProps> = (props) => {
   }, [props.token]);
 
   return (
-    <div className="statistics">
-      <>
-        <div className="mainStats">
-          <div>
-            <h1>Your top songs</h1>
-            {tracks.map((track, index) => {
-              return (
-                <div key={index}>
-                  {index + 1}. {track.name} by {track.artists[0].name}
-                </div>
-              );
-            })}
-          </div>
-          <div>
-            <h1>Your top artists</h1>
-            {artists.map((item, index) => {
-              return (
-                <div key={index}>
-                  {index + 1}. {item.name}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="imagesContainer">
-          {artists.map((item, index) => {
-            return (
-              <div key={index} className="imageContainer">
-                <img src={item.images[0].url} alt={item.name} />
-              </div>
-            );
-          })}
-        </div>
-      </>
-    </div>
+    <>
+      {view ? (
+        <Visualiser artists={artists} />
+      ) : (
+        <Visualiser2D artists={artists} tracks={tracks} />
+      )}
+    </>
   );
 };
 
