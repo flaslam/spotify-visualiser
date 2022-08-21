@@ -1,0 +1,8 @@
+.btnHolder {
+  position: absolute;
+}
+
+.toggleBtn {
+  position: absolute;
+  z-index: 50;
+}

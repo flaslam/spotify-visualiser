@@ -3,6 +3,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .mainStats {
@@ -22,11 +24,8 @@
 
 .imagesContainer {
   display: grid;
-  max-width: 100%;
   grid-template-columns: repeat(5, 1fr);
-  padding: 0;
-  margin: 0;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 .imageContainer {
@@ -37,5 +36,4 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  pointer-events: none;
 }

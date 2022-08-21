@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import Statistics from "./Statistics";
-import Login from "./Login";
+import Statistics from "./components/Statistics";
+import Login from "./components/Login";
 
 const App: React.FC = () => {
   // Authorization token
   const [token, setToken] = useState<string>("");
 
+  // On component mount
   useEffect(() => {
     const getTokenFromHash = () => {
       // Get the hash from the URL, format: #access_token=XYZ&token_type=Bearer&expires_in=3600

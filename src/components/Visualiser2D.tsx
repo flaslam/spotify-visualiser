@@ -1,4 +1,5 @@
 import React from "react";
+import "./Visualiser2D.css";
 
 interface Visualiser2DProps {
   artists: any[];

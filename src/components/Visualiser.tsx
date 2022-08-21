@@ -1,4 +1,3 @@
-import { useSpring, animated } from "@react-spring/three";
 import { Html, OrbitControls, Stars, Cloud } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React from "react";
@@ -6,15 +5,6 @@ import "./Visualiser.css";
 
 interface VisualiserProps {
   artists: any[];
-}
-
-function Box() {
-  return (
-    <mesh>
-      <boxBufferGeometry attach="geometry" />
-      <meshToonMaterial attach="material" color="hotpink" />
-    </mesh>
-  );
 }
 
 const Dodecahedron = (text: string, position: number = 0, img: string = "") => {
@@ -33,10 +23,10 @@ const Dodecahedron = (text: string, position: number = 0, img: string = "") => {
 
   const items = 20;
   const percent = (1 - position / (items * 1)) * 100;
-  console.log(percent);
+  // console.log(percent);
   return (
-    <mesh scale={1 / position} position={finalPos}>
-      {/* [position * 3, position * 3, position * 2] */}
+    // <mesh scale={1 / position} position={finalPos}>
+    <mesh scale={1} position={finalPos}>
       <dodecahedronGeometry />
       <meshLambertMaterial roughness={0.75} emissive="#404057" />
       <Html distanceFactor={10}>
@@ -45,8 +35,8 @@ const Dodecahedron = (text: string, position: number = 0, img: string = "") => {
             src={img}
             alt={text}
             style={{
-              height: `${percent}%`,
-              width: `${percent}%`,
+              // height: `${percent}%`,
+              // width: `${percent}%`,
               zIndex: `-${position}`,
               // TODO: include translate here so that each one moves back by the right %
             }}
@@ -60,16 +50,13 @@ const Dodecahedron = (text: string, position: number = 0, img: string = "") => {
   );
 };
 
-// const FadeIn = () => {
-//     const styles
-// }
-
 const Visualiser: React.FC<VisualiserProps> = (props) => {
   return (
     <div className="visualiser">
-      <>{console.log(props.artists)}</>
       <Canvas>
-        <OrbitControls />
+        <OrbitControls
+        // enablePan={false}
+        />
         <Stars
           radius={10}
           depth={50}
@@ -81,12 +68,6 @@ const Visualiser: React.FC<VisualiserProps> = (props) => {
         />
         <ambientLight intensity={1} />
         <spotLight position={[10, 15, 10]} angle={0.3} />
-        {/* <spotLight position={[10, 15, 10]} angle={0.3} /> */}
-        {/* <Dodecahedron /> */}
-        {/* {Dodecahedron(props.data[0][0].name)} */}
-        {props.artists.map((item, index) => {
-          return <>{Dodecahedron(item.name, index + 1, item.images[0].url)}</>;
-        })}
         <Cloud
           opacity={0.5}
           speed={0.4} // Rotation speed
@@ -95,6 +76,13 @@ const Visualiser: React.FC<VisualiserProps> = (props) => {
           segments={20} // Number of particles
           color={"hotpink"}
         />
+        {props.artists && props.artists.length > 0
+          ? props.artists.map((item, index) => {
+              return (
+                <>{Dodecahedron(item.name, index + 1, item.images[0].url)}</>
+              );
+            })
+          : null}
       </Canvas>
     </div>
   );
